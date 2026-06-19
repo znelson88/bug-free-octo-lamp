@@ -12,9 +12,18 @@ export default {
       });
     }
 
+    // Generic check: confirms a named secret/variable is loaded, without exposing its value.
+    // Usage: /api/check-secret?name=YOUR_VAR_NAME
     if (url.pathname === "/api/check-secret") {
-      const hasSecret = typeof env.TEST_SECRET !== "undefined";
-      return new Response(JSON.stringify({ secretLoaded: hasSecret }), {
+      const name = url.searchParams.get("name");
+      if (!name) {
+        return new Response(JSON.stringify({ error: "Missing ?name= parameter" }), {
+          status: 400,
+          headers: { "content-type": "application/json" },
+        });
+      }
+      const loaded = typeof env[name] !== "undefined";
+      return new Response(JSON.stringify({ name, loaded }), {
         headers: { "content-type": "application/json" },
       });
     }
