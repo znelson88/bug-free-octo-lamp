@@ -1,6 +1,3 @@
 name = "bug-free-octo-lamp"
 main = "src/index.js"
 compatibility_date = "2026-06-19"
-
-[vars]
-TEST_SECRET = "my-super-secret-123"
