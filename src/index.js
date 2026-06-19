@@ -1,7 +1,17 @@
 export default {
   async fetch(request, env, ctx) {
-    return new Response("Hello World! 🎉 Your Worker is live.", {
-      headers: { "content-type": "text/plain" },
-    });
+    const url = new URL(request.url);
+
+    if (url.pathname === "/") {
+      return new Response("Hello World! 🎉 Your Worker is live.");
+    }
+
+    if (url.pathname === "/api/status") {
+      return new Response(JSON.stringify({ status: "ok", time: new Date().toISOString() }), {
+        headers: { "content-type": "application/json" },
+      });
+    }
+
+    return new Response("Not Found", { status: 404 });
   },
 };
