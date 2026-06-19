@@ -12,6 +12,13 @@ export default {
       });
     }
 
+    if (url.pathname === "/api/check-secret") {
+      const hasSecret = typeof env.TEST_SECRET !== "undefined";
+      return new Response(JSON.stringify({ secretLoaded: hasSecret }), {
+        headers: { "content-type": "application/json" },
+      });
+    }
+
     return new Response("Not Found", { status: 404 });
   },
 };
